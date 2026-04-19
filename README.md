@@ -40,7 +40,7 @@ The project implements a custom context-free analysis engine:
 
 1.  **Clone the Repository:**
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/AkshatPatel1326/Context-Free-footprint-Analyzer
     cd Footprint-Analyzer
     ```
 
@@ -80,8 +80,10 @@ The project implements a custom context-free analysis engine:
 ```
 
 ## 🔐 Admin Access
-- **Admin Credentials:** `admin` / `admin123` (Configurable in `app.py`)
+- **Admin Credentials:** Demo credentials available on request (Configurable in `app.py`)
 - **Easter Egg:** On the home page, click the **"Footprint Analyzer"** brand name in the navbar **5 times** to quickly jump to the Admin Login.
 
 ---
 **Developed as a Minor Project — CSE Department**
+
+
