@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footprint Analyzer — Profile Evaluation System</title>
+    <meta name="description"
+        content="Context-Free Footprint Analyzer: Submit your skills, projects, and certifications to get a scored profile analysis, career insights, and skill gap identification — no external APIs required.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <!-- ✅ FIXED HERE -->
+        <a href="javascript:void(0)" class="navbar-brand" id="brand-link">
+            <span class="dot"></span>
+            Footprint Analyzer
+        </a>
+        <div class="navbar-nav">
+            <a href="{{ url_for('about') }}" class="nav-btn nav-btn-ghost">About</a>
+            {% if session.get("user_logged") %}
+            <span class="nav-greeting">Welcome, {{ session.get("user_name") }}</span>
+            <a href="{{ url_for('my_submissions') }}" class="nav-btn nav-btn-ghost">My History</a>
+            <a href="{{ url_for('form') }}" class="nav-btn nav-btn-solid">Go to Form</a>
+            <a href="{{ url_for('user_logout') }}" class="nav-btn nav-btn-ghost">Logout</a>
+            {% else %}
+            <a href="{{ url_for('user_login') }}" class="nav-btn nav-btn-ghost">Sign In</a>
+            <a href="{{ url_for('user_signup') }}" class="nav-btn nav-btn-solid">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div>
+            <span class="hero-badge">🎓 Minor Project</span>
+            <h1 class="hero-title">Context-Free Footprint Analyzer</h1>
+            <p class="hero-sub">
+                Submit your skills, projects, and certifications to receive an instant, scored analysis of your
+                technical profile — domain classification, career role suggestions, and skill gap identification.
+            </p>
+            <div class="hero-actions">
+                {% if session.get("user_logged") %}
+                <a href="{{ url_for('form') }}" class="hero-btn hero-btn-primary">🚀 Analyze My Profile</a>
+                <a href="{{ url_for('my_submissions') }}" class="hero-btn hero-btn-outline">📋 My History</a>
+                {% else %}
+                <a href="{{ url_for('user_signup') }}" class="hero-btn hero-btn-primary">🚀 Get Started Free</a>
+                <a href="{{ url_for('user_login') }}" class="hero-btn hero-btn-outline">Sign In</a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Cards -->
+    <section class="features-section">
+        <p class="section-heading">Why Footprint Analyzer?</p>
+        <p class="section-sub">A complete context-free system — from raw input to data-driven career insight</p>
+
+        <div class="cards-grid">
+            <div class="feature-card">
+                <div class="card-icon">⚙️</div>
+                <h3 class="card-title">Automated Domain Classification</h3>
+                <p class="card-desc">Keyword-based engine detects your primary technical domain — Programming, Data
+                    Analytics, Networking, or UI/UX — from your submitted skills.</p>
+            </div>
+            <div class="feature-card">
+                <div class="card-icon">📊</div>
+                <h3 class="card-title">Profile Scoring (0–100)</h3>
+                <p class="card-desc">Your profile receives a quantified score based on skill richness, project count,
+                    certifications, and domain keyword strength.</p>
+            </div>
+            <div class="feature-card">
+                <div class="card-icon">🗺️</div>
+                <h3 class="card-title">Skill Gap & Career Roadmap</h3>
+                <p class="card-desc">Identifies gaps in your current skill set and suggests an appropriate career role
+                    along with a targeted learning path.</p>
+            </div>
+            <div class="feature-card">
+                <div class="card-icon">📄</div>
+                <h3 class="card-title">Downloadable PDF Report</h3>
+                <p class="card-desc">Export your full analysis as a professional, formatted PDF report — useful for
+                    portfolio documentation and presentations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="card-icon">📈</div>
+                <h3 class="card-title">Submission History</h3>
+                <p class="card-desc">Track all your previous analyses with timestamps, scores, and domain insights to
+                    monitor your progress over time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="card-icon">🔒</div>
+                <h3 class="card-title">Secure & Offline-Ready</h3>
+                <p class="card-desc">No external APIs, no data sent to third-party services. The entire analysis engine
+                    runs locally using context-free keyword matching.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-strip">
+        <h2>Ready to evaluate your technical profile?</h2>
+        <p>Create an account and submit your first analysis in under 2 minutes.</p>
+        {% if session.get("user_logged") %}
+        <a href="{{ url_for('form') }}" class="hero-btn hero-btn-primary">→ Go to Analysis Form</a>
+        {% else %}
+        <a href="{{ url_for('user_signup') }}" class="hero-btn hero-btn-primary">→ Create Free Account</a>
+        {% endif %}
+    </section>
+
+    <footer>
+        Context-Free Footprint Analyzer &mdash; Minor Project &copy; 2026 &nbsp;|&nbsp; CSE Department
+    </footer>
+
+    <!-- ✅ FINAL FIXED SCRIPT -->
+    <script>
+        (function () {
+            const link = document.getElementById('brand-link');
+            if (!link) return;
+
+            let clicks = 0;
+            let timer = null;
+
+            link.addEventListener('click', function () {
+                clicks++;
+                console.log("Clicks:", clicks);
+
+                if (clicks === 1) {
+                    timer = setTimeout(() => {
+                        clicks = 0;
+                    }, 3000);
+                }
+
+                if (clicks >= 5) {
+                    clearTimeout(timer);
+                    clicks = 0;
+                    window.location.href = "/admin";
+                }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>

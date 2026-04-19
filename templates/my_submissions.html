@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Submissions — Footprint Analyzer</title>
+    <meta name="description" content="View all your past profile analysis submissions on the Footprint Analyzer.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}" class="navbar-brand">
+            <span class="dot"></span>
+            Footprint Analyzer
+        </a>
+        <div class="navbar-nav">
+            <span class="nav-greeting">{{ user_name }}</span>
+            <a href="{{ url_for('form') }}" class="nav-btn nav-btn-solid">+ New Analysis</a>
+            <a href="{{ url_for('user_logout') }}" class="nav-btn nav-btn-ghost">Logout</a>
+        </div>
+    </nav>
+
+    <main class="page-main" style="align-items: flex-start;">
+        <div class="dashboard-wrap" style="max-width:1000px; width:100%;">
+
+            <!-- Header -->
+            <div class="dashboard-topbar">
+                <div>
+                    <h1 class="dashboard-title">My Submissions</h1>
+                    <p class="dashboard-subtitle">All your profile analysis submissions — track your progress over time</p>
+                </div>
+            </div>
+
+            <!-- Stats (3-col) -->
+            <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-blue">📋</div>
+                    <div class="stat-body">
+                        <div class="stat-value">{{ total }}</div>
+                        <div class="stat-label">Total Submissions</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-purple">📊</div>
+                    <div class="stat-body">
+                        <div class="stat-value">{{ avg_score }}</div>
+                        <div class="stat-label">Average Score</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-green">🏆</div>
+                    <div class="stat-body">
+                        <div class="stat-value">{{ best_score }}</div>
+                        <div class="stat-label">Best Score</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-card">
+                <div class="table-header">
+                    <div class="table-title">
+                        Submission History
+                        <span class="badge-count">{{ total }} total</span>
+                    </div>
+                </div>
+
+                {% if rows %}
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Name Submitted</th>
+                                <th>Domain</th>
+                                <th>Score</th>
+                                <th>Strength</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i, row in rows|enumerate %}
+                            <tr>
+                                <td style="color: var(--text-muted); font-weight: 600;">{{ i + 1 }}</td>
+                                <td style="font-weight: 600;">{{ row.name or '—' }}</td>
+                                <td style="color: var(--text-secondary); font-size: 12px;">{{ row.domain or '—' }}</td>
+                                <td>
+                                    {% set s = row.score if row.score is not none else 0 %}
+                                    <span class="score-pill
+                                        {% if s >= 70 %}score-high
+                                        {% elif s >= 45 %}score-mid
+                                        {% else %}score-low{% endif %}">
+                                        {{ s }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% set st = row.strength or '' %}
+                                    <span class="strength-badge
+                                        {% if 'Strong' in st %}strength-strong
+                                        {% elif 'Moderate' in st %}strength-moderate
+                                        {% else %}strength-weak{% endif %}">
+                                        {{ st or '—' }}
+                                    </span>
+                                </td>
+                                <td style="color: var(--text-muted); font-size: 12px;">
+                                    {{ row.submitted_at[:10] if row.submitted_at else '—' }}
+                                </td>
+                                <td>
+                                    <div class="row-actions">
+                                        <button class="btn btn-info" title="View Details"
+                                            onclick="openModal({
+                                                student_id: '{{ row.id }}',
+                                                name: '{{ (row.name or '') | replace("'", "\\'") }}',
+                                                domain: '{{ (row.domain or '') | replace("'", "\\'") }}',
+                                                strength: '{{ (row.strength or '') | replace("'", "\\'") }}',
+                                                score: '{{ row.score or 0 }}',
+                                                skills: '{{ (row.skills or '') | replace("'", "\\'") | replace("\n", " ") }}',
+                                                projects: '{{ (row.projects or '') | replace("'", "\\'") | replace("\n", " ") }}',
+                                                certifications: '{{ (row.certifications or "") | replace("'", "\\'") | replace("\n", " ") }}',
+                                                insight: '{{ (row.insight or "") | replace("'", "\\'") }}',
+                                                skill_gap: '{{ (row.skill_gap or "") | replace("'", "\\'") }}',
+                                                suggested_role: '{{ (row.suggested_role or "") | replace("'", "\\'") }}',
+                                                recommended_skills: '{{ (row.recommended_skills or "") | replace("'", "\\'") }}'
+                                            })">👁 View</button>
+                                        <a href="{{ url_for('download_pdf', student_id=row.id) }}"
+                                            class="btn btn-success" title="Download PDF">⬇ PDF</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📭</div>
+                    <p>You haven't submitted any profiles yet.</p>
+                    <a href="{{ url_for('form') }}" class="btn btn-primary" style="margin-top: 16px;">
+                        Submit Your First Profile →
+                    </a>
+                </div>
+                {% endif %}
+
+            </div><!-- /table-card -->
+
+        </div><!-- /dashboard-wrap -->
+    </main>
+
+    <!-- View Details Modal -->
+    <div id="studentModal" class="modal-backdrop" onclick="closeModal(event)" style="display:none;">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-name" id="m-name"></div>
+                    <div class="modal-domain" id="m-domain"></div>
+                </div>
+                <div class="modal-header-right">
+                    <div class="modal-score-circle" id="m-score"></div>
+                    <button class="modal-close"
+                        onclick="document.getElementById('studentModal').style.display='none'">✕</button>
+                </div>
+            </div>
+            <div class="modal-grid">
+                <div class="modal-field">
+                    <div class="modal-label">Profile Strength</div>
+                    <div class="modal-val" id="m-strength"></div>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-label">Suggested Role</div>
+                    <div class="modal-val" id="m-role"></div>
+                </div>
+                <div class="modal-field full">
+                    <div class="modal-label">Professional Insight</div>
+                    <div class="modal-val" id="m-insight"></div>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-label">Skills</div>
+                    <div class="modal-val" id="m-skills"></div>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-label">Projects</div>
+                    <div class="modal-val" id="m-projects"></div>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-label">Certifications</div>
+                    <div class="modal-val" id="m-certs"></div>
+                </div>
+                <div class="modal-field">
+                    <div class="modal-label">Identified Skill Gap</div>
+                    <div class="modal-val" id="m-gap"></div>
+                </div>
+                <div class="modal-field full">
+                    <div class="modal-label">Recommended Skills to Learn</div>
+                    <div class="modal-val" id="m-rec"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="m-pdf-btn" href="#" class="btn btn-outline btn-sm">⬇ Download PDF</a>
+                <button class="btn btn-primary btn-sm"
+                    onclick="document.getElementById('studentModal').style.display='none'">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Context-Free Footprint Analyzer &mdash; Minor Project &copy; 2026
+    </footer>
+
+    <script>
+        function openModal(d) {
+            const sv = v => (!v || v === 'None') ? '—' : v;
+            document.getElementById('m-name').textContent   = sv(d.name);
+            document.getElementById('m-domain').textContent = sv(d.domain);
+            document.getElementById('m-score').textContent  = d.score || '0';
+
+            const strengthEl = document.getElementById('m-strength');
+            strengthEl.textContent = sv(d.strength);
+            strengthEl.className = 'modal-val';
+            if (d.strength && d.strength.includes('Strong'))    strengthEl.classList.add('modal-strength-strong');
+            else if (d.strength && d.strength.includes('Moderate')) strengthEl.classList.add('modal-strength-moderate');
+            else if (d.strength) strengthEl.classList.add('modal-strength-weak');
+
+            document.getElementById('m-role').textContent = sv(d.suggested_role);
+            document.getElementById('m-insight').textContent = sv(d.insight);
+            document.getElementById('m-skills').textContent = sv(d.skills);
+            document.getElementById('m-projects').textContent = sv(d.projects);
+            document.getElementById('m-certs').textContent = sv(d.certifications);
+            document.getElementById('m-gap').textContent = sv(d.skill_gap);
+            document.getElementById('m-rec').textContent = sv(d.recommended_skills);
+
+            if (d.student_id) {
+                document.getElementById('m-pdf-btn').href = '/download/pdf/' + d.student_id;
+            }
+
+            const box = document.querySelector('.modal-box');
+            box.style.animation = 'none';
+            box.offsetHeight;
+            box.style.animation = '';
+            document.getElementById('studentModal').style.display = 'flex';
+        }
+
+        function closeModal(e) {
+            if (e.target.id === 'studentModal')
+                document.getElementById('studentModal').style.display = 'none';
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') document.getElementById('studentModal').style.display = 'none';
+        });
+    </script>
+
+</body>
+
+</html>

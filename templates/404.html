@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found | Footprint Analyzer</title>
+    <meta name="description" content="The page you are looking for could not be found.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}" class="navbar-brand">
+            <span class="dot"></span>
+            Footprint Analyzer
+        </a>
+        <div class="navbar-nav">
+            <a href="{{ url_for('home') }}" class="nav-btn nav-btn-ghost">← Home</a>
+        </div>
+    </nav>
+
+    <div class="page-404">
+        <div class="err-code">404</div>
+        <h1 class="err-title">Page Not Found</h1>
+        <p class="err-desc">
+            The page you're looking for doesn't exist or may have been moved.
+            Head back to the home page to continue.
+        </p>
+        <div class="err-actions">
+            <a href="{{ url_for('home') }}" class="btn btn-primary">← Back to Home</a>
+            <a href="{{ url_for('about') }}" class="btn btn-outline">About the Project</a>
+        </div>
+    </div>
+
+    <footer>
+        Context-Free Footprint Analyzer &mdash; Minor Project &copy; 2026
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result — Footprint Analyzer</title>
+    <meta name="description" content="Your profile analysis result — domain, score, career insights and skill recommendations from the Footprint Analyzer.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}" class="navbar-brand" id="brand-link">
+            <span class="dot"></span>
+            Footprint Analyzer
+        </a>
+        <div class="navbar-nav">
+            <span class="nav-greeting">{{ user_name }}</span>
+            <a href="{{ url_for('my_submissions') }}" class="nav-btn nav-btn-ghost">My History</a>
+            <a href="{{ url_for('form') }}" class="nav-btn nav-btn-solid">New Analysis</a>
+            <a href="{{ url_for('user_logout') }}" class="nav-btn nav-btn-ghost">Logout</a>
+        </div>
+    </nav>
+
+    <main class="page-main">
+        <div class="result-wrap">
+
+            <!-- Hero Score Banner -->
+            <div class="result-hero">
+                <div>
+                    <p class="result-name">{{ name }}</p>
+                    <p class="result-domain-line">{{ domain }}</p>
+                </div>
+                <div class="score-gauge-wrap">
+                    <svg class="score-svg" viewBox="0 0 120 120" aria-hidden="true">
+                        <circle class="gauge-track" cx="60" cy="60" r="50"/>
+                        <circle class="gauge-fill" id="gauge-arc" cx="60" cy="60" r="50"/>
+                    </svg>
+                    <div class="gauge-center">
+                        <span class="gauge-num">{{ score }}</span>
+                        <span class="gauge-sub">/100</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- First Row: Strength + Score Bar -->
+            <div class="result-grid">
+
+                <div class="result-section-card">
+                    <p class="rs-label">Profile Strength</p>
+                    {% if "Strong" in strength %}
+                    <span class="strength-tag strong">{{ strength }}</span>
+                    {% elif "Moderate" in strength %}
+                    <span class="strength-tag moderate">{{ strength }}</span>
+                    {% else %}
+                    <span class="strength-tag weak">{{ strength }}</span>
+                    {% endif %}
+                    <div class="score-bar-wrap mt-3">
+                        <div class="score-bar-fill" id="score-bar" style="width: 0%;"></div>
+                    </div>
+                    <p class="text-muted mt-1">Score: {{ score }}/100</p>
+                </div>
+
+                <div class="result-section-card">
+                    <p class="rs-label">Suggested Role</p>
+                    <p class="rs-value" style="font-weight: 700; color: var(--navy);">{{ suggested_role }}</p>
+                    <p class="rs-label mt-3">Recommended Skills to Learn</p>
+                    <p class="rs-value" style="font-size: 13px;">{{ recommended_skills }}</p>
+                </div>
+
+            </div>
+
+            <!-- Insight (full width) -->
+            <div class="result-grid">
+                <div class="result-section-card full">
+                    <p class="rs-label">Professional Insight</p>
+                    <p class="rs-value">{{ insight }}</p>
+                </div>
+            </div>
+
+            <!-- Skills + Projects + Certs -->
+            <div class="result-grid">
+                <div class="result-section-card">
+                    <p class="rs-label">Skills Submitted</p>
+                    <p class="rs-value">{{ skills | title if skills else "—" }}</p>
+                </div>
+                <div class="result-section-card">
+                    <p class="rs-label">Projects</p>
+                    <p class="rs-value">{{ projects if projects else "—" }}</p>
+                </div>
+            </div>
+
+            <div class="result-grid">
+                <div class="result-section-card">
+                    <p class="rs-label">Certifications</p>
+                    <p class="rs-value">{{ certifications | title if certifications else "—" }}</p>
+                </div>
+                <div class="result-section-card">
+                    <p class="rs-label">Identified Skill Gap</p>
+                    <p class="rs-value" style="color: #b45309;">{{ skill_gap }}</p>
+                </div>
+            </div>
+
+
+            <!-- Actions -->
+            <div class="result-actions">
+                <a href="{{ url_for('download_pdf', student_id=student_id) }}" class="btn btn-primary" id="pdf-btn">
+                    ⬇ Download PDF Report
+                </a>
+                <a href="{{ url_for('form') }}" class="btn btn-outline">
+                    + Submit Another Profile
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        Context-Free Footprint Analyzer &mdash; Minor Project &copy; 2026
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const circumference = 314.16;
+            const score = {{ score }};
+            setTimeout(function () {
+                const offset = circumference - (score / 100) * circumference;
+                document.getElementById("gauge-arc").style.strokeDashoffset = offset;
+                document.getElementById("score-bar").style.width = score + "%";
+            }, 300);
+        });
+
+        /* ── Admin Easter Egg ── */
+        (function() {
+            var link = document.getElementById('brand-link');
+            if (!link) return;
+            link.addEventListener('click', function() {
+                var now = Date.now();
+                var raw  = localStorage.getItem('_ae');
+                var data = raw ? JSON.parse(raw) : {c:0, t:0};
+                if (now - data.t > 3000) data.c = 0;
+                data.c++;
+                data.t = now;
+                localStorage.setItem('_ae', JSON.stringify(data));
+                if (data.c >= 5) {
+                    localStorage.removeItem('_ae');
+                    window.location.href = '/admin';
+                }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>

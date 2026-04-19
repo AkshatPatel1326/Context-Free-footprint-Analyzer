@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Database
+# Note: Usually you don't upload the database if it contains personal test data.
+database.db
+
+# Reports
+*.pdf
+*.csv
+
+# OS generated files
+.DS_Store
+Thumbs.db

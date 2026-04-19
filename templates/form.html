@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile Form — Footprint Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}" class="navbar-brand" id="brand-link">
+            <span class="dot"></span>
+            Footprint Analyzer
+        </a>
+        <div class="navbar-nav">
+            <span class="nav-greeting">{{ user_name }}</span>
+            <a href="{{ url_for('my_submissions') }}" class="nav-btn nav-btn-ghost">My History</a>
+            <a href="{{ url_for('user_logout') }}" class="nav-btn nav-btn-ghost">Logout</a>
+        </div>
+    </nav>
+
+    <main class="page-main">
+        <div class="form-page-wrap">
+
+            <div class="form-page-header">
+                <h1 class="form-page-title">Student Profile Submission</h1>
+                <p class="form-page-sub">Fill in your details accurately. Your profile will be analyzed and scored based
+                    on the input provided.</p>
+            </div>
+
+            <div class="form-card">
+                <form method="POST" action="{{ url_for('submit') }}" id="profile-form">
+
+                    <!-- Personal Info -->
+                    <p class="form-section-title">Personal Information</p>
+
+                    <div class="form-group">
+                        <label class="form-label" for="name">Full Name <span style="color:#ef4444">*</span></label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Your Full Name"
+                            required autocomplete="name">
+                    </div>
+
+                    <!-- Technical Profile -->
+                    <p class="form-section-title">Technical Profile</p>
+
+                    <div class="form-group">
+                        <label class="form-label" for="skills"></label>
+                        <textarea id="skills" name="skills" class="form-control"
+                            placeholder="e.g. Python, Java, SQL, React, Machine Learning, Data Analysis..."></textarea>
+                        <p class="form-hint">Mention programming languages, tools, frameworks, or technologies you know.
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="projects">Projects</label>
+                        <textarea id="projects" name="projects" class="form-control"
+                            placeholder="e.g. Built a student management system using Flask and SQLite, created a data dashboard in Tableau..."></textarea>
+                        <p class="form-hint">Describe academic or personal projects, even simple ones count.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="certifications">Certifications</label>
+                        <textarea id="certifications" name="certifications" class="form-control"
+                            placeholder="e.g. Python for Everybody (Coursera), AWS Cloud Practitioner, NPTEL Data Structures..."></textarea>
+                        <p class="form-hint">List any online or offline certifications you have completed.</p>
+                    </div>
+
+                    <div style="margin-top: 28px;">
+                        <button type="submit" class="btn btn-primary btn-full" id="submit-btn">
+                            Analyze My Profile →
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        Context-Free Footprint Analyzer &mdash; Minor Project &copy; 2026
+    </footer>
+
+    <script>
+        document.getElementById("profile-form").addEventListener("submit", function () {
+            const btn = document.getElementById("submit-btn");
+            btn.textContent = "Analyzing...";
+            btn.classList.add("btn-loading");
+        });
+    </script>
+
+    <script>
+        /* ── Admin Easter Egg ── */
+        (function () {
+            var link = document.getElementById('brand-link');
+            if (!link) return;
+            link.addEventListener('click', function () {
+                var now = Date.now();
+                var raw = localStorage.getItem('_ae');
+                var data = raw ? JSON.parse(raw) : { c: 0, t: 0 };
+                if (now - data.t > 3000) data.c = 0;
+                data.c++;
+                data.t = now;
+                localStorage.setItem('_ae', JSON.stringify(data));
+                if (data.c >= 5) {
+                    localStorage.removeItem('_ae');
+                    window.location.href = '/admin';
+                }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
