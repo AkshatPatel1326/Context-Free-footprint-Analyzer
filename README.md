@@ -1,6 +1,6 @@
 # Footprint Analyzer — Profile Evaluation System
 
-**Footprint Analyzer** is a comprehensive, full-stack web application developed as a **Minor Project** for the Computer Science & Engineering (CSE) Department. The system evaluates student technical profiles (skills, projects, and certifications) to provide quantified scoring, domain classification, and data-driven career insights.
+**Footprint Analyzer** is a full-stack Flask web application that evaluates student technical profiles using skills, projects, and certifications. It provides domain classification, profile scoring, and data-driven career recommendations through an interactive dashboard. The system also includes analytics, history tracking, and PDF report generation.
 
 ## 🚀 Key Features
 
