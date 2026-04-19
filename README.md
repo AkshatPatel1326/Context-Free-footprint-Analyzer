@@ -80,8 +80,22 @@ The project implements a custom context-free analysis engine:
 ```
 
 ## 🔐 Admin Access
-- **Admin Credentials:** Demo credentials available on request (Configurable in `app.py`)
+- **Admin Credentials:** **Demo credentials available on request** (Configurable in `app.py`)
 - **Easter Egg:** On the home page, click the **"Footprint Analyzer"** brand name in the navbar **5 times** to quickly jump to the Admin Login.
+
+## 📸 Screenshots
+
+🏠 Home Page
+![Home Page](Assests/Homepage.png)
+
+📊 Result Page
+![Result](Assests/Result.png)
+
+📈 Admin Dashboard
+![Admin Dashboard](Assests/AdminDashboard.png)
+
+🧾 Data Feeding (Form Page)
+![Form](Assests/DataFeeding.png)
 
 ---
 **Developed as a Minor Project — CSE Department**
