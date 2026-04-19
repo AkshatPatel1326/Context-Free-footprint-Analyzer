@@ -86,16 +86,17 @@ The project implements a custom context-free analysis engine:
 ## 📸 Screenshots
 
 🏠 Home Page
-![Home Page](Assests/home.png)
-
-📊 Result Page
-![Result](Assests/Result.png)
+[Home Page](Assests/home.png)
 
 📈 Admin Dashboard
-![Admin Dashboard](Assests/admin.png)
+[Admin Dashboard](Assests/admin.png)
 
 🧾 Data Feeding (Form Page)
-![Form](Assests/data.png)
+[Form](Assests/data.png)
+
+📊 Result Page
+[Result](Assests/Result.png)
+
 
 ---
 **Developed as a Minor Project — CSE Department**
