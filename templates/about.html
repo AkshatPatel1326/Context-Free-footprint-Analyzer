@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Footprint Analyzer</title>
+    <meta name="description"
+        content="Learn about the Context-Free Footprint Analyzer — a minor project by the CSE Department that evaluates student technical profiles using keyword-based analysis.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}" class="navbar-brand">
+            <span class="dot"></span>
+            Footprint Analyzer
+        </a>
+        <div class="navbar-nav">
+            <a href="{{ url_for('home') }}" class="nav-btn nav-btn-ghost">← Home</a>
+            {% if session.get("user_logged") %}
+            <a href="{{ url_for('form') }}" class="nav-btn nav-btn-solid">New Analysis</a>
+            {% else %}
+            <a href="{{ url_for('user_login') }}" class="nav-btn nav-btn-solid">Sign In</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="about-hero">
+        <span class="about-hero-badge">Minor Project — CSE Department</span>
+        <h1 class="about-hero-title">Context-Free Footprint Analyzer</h1>
+        <p class="about-hero-sub">
+            A structured web-based system designed to evaluate, score, and provide career
+            insights for student technical profiles — no external APIs required.
+        </p>
+    </div>
+
+    <!-- Content -->
+    <div class="about-content">
+
+        <!-- Overview -->
+        <div class="about-section">
+            <div class="about-section-label">Overview</div>
+            <h2 class="about-section-title">What is Footprint Analyzer?</h2>
+            <p class="about-section-text">
+                The <strong>Context-Free Footprint Analyzer</strong> is a web-based application developed as a minor
+                project for the Computer Science &amp; Engineering Department. It allows students to submit their
+                technical profile — including skills, projects, and certifications — and receive a structured, scored
+                analysis instantly.
+            </p>
+            <p class="about-section-text" style="margin-top: 12px;">
+                The system uses a <strong>keyword-based analysis engine</strong> that evaluates student inputs across
+                four major technical domains: Programming &amp; Development, Data &amp; Analytics, Networking &amp;
+                Cloud, and UI/UX &amp; Design. It then generates a profile score, identifies skill gaps, suggests an
+                appropriate role, and recommends further learning paths — entirely self-contained.
+            </p>
+        </div>
+
+        <!-- How It Works -->
+        <div class="about-section">
+            <div class="about-section-label">Process</div>
+            <h2 class="about-section-title">How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-icon">📝</div>
+                    <div class="step-num">1</div>
+                    <div class="step-title">Submit Your Profile</div>
+                    <p class="step-desc">Register an account and fill in your technical skills, academic projects, and
+                        certifications you have earned.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">⚙️</div>
+                    <div class="step-num">2</div>
+                    <div class="step-title">Keyword Analysis</div>
+                    <p class="step-desc">The engine evaluates your profile, detects your primary tech domain, and
+                        computes a score from 0 to 100 based on weighted criteria.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">📊</div>
+                    <div class="step-num">3</div>
+                    <div class="step-title">Get Detailed Report</div>
+                    <p class="step-desc">Receive your full analysis: profile strength, suggested career role, skill
+                        gaps, recommendations, and a downloadable PDF report.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Analytics Pipeline -->
+        <div class="about-section">
+            <div class="about-section-label">Data Analytics</div>
+            <h2 class="about-section-title">Data Analytics Pipeline</h2>
+            <div class="features-grid">
+                <div class="feature-row">
+                    <div class="feature-check">1</div>
+                    <div class="feature-text"><strong>Data Cleaning</strong> — Input normalized to lowercase, duplicate
+                        skills removed, and whitespace stripped before analysis</div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-check">2</div>
+                    <div class="feature-text"><strong>Feature Extraction</strong> — Raw text converted to structured
+                        counts: skill_count, project_count, cert_count</div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-check">3</div>
+                    <div class="feature-text"><strong>Pattern Identification</strong> — Most common domain, average
+                        score, and top skills computed from all stored records</div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-check">4</div>
+                    <div class="feature-text"><strong>Enhanced Insights</strong> — Data-driven improvement roadmap
+                        generated based on feature counts and profile score</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="about-section">
+            <div class="about-section-label">Built With</div>
+            <h2 class="about-section-title">Technologies Used</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-icon">🐍</div>
+                    <div class="tech-name">Flask</div>
+                    <div class="tech-role">Python Web Framework</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🗄️</div>
+                    <div class="tech-name">SQLite</div>
+                    <div class="tech-role">Relational Database</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">📈</div>
+                    <div class="tech-name">Chart.js</div>
+                    <div class="tech-role">Data Visualization</div>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">📄</div>
+                    <div class="tech-name">ReportLab</div>
+                    <div class="tech-role">PDF Generation</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Info -->
+        <div class="about-section">
+            <div class="about-section-label">Project Details</div>
+            <h2 class="about-section-title">Project Information</h2>
+            <div class="about-info-box">
+                <div class="about-info-grid">
+                    <div>
+                        <div class="rs-label">Project Title</div>
+                        <div class="rs-value">Context-Free Footprint Analyzer</div>
+                    </div>
+                    <div>
+                        <div class="rs-label">Project Type</div>
+                        <div class="rs-value">Minor Project — Academic Submission</div>
+                    </div>
+                    <div>
+                        <div class="rs-label">Department</div>
+                        <div class="rs-value">Computer Science &amp; Engineering (CSE)</div>
+                    </div>
+                    <div>
+                        <div class="rs-label">Academic Year</div>
+                        <div class="rs-value">2025 – 2026</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="about-section" style="text-align: center; margin-bottom: 0;">
+            <a href="{{ url_for('user_signup') }}" class="btn btn-primary" style="margin-right: 12px;">Get Started →</a>
+            <a href="{{ url_for('home') }}" class="btn btn-outline">← Back to Home</a>
+        </div>
+
+    </div>
+
+    <footer>
+        Context-Free Footprint Analyzer &mdash; Minor Project &copy; 2026 &nbsp;
+    </footer>
+
+</body>
+
+</html>
