@@ -40,7 +40,7 @@ The project implements a custom context-free analysis engine:
 
 1.  **Clone the Repository:**
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/AkshatPatel1326/Context-Free-footprint-Analyzer
     cd Footprint-Analyzer
     ```
 
